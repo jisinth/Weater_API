@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <!-- Add links to necessary CSS and JavaScript libraries -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+<body>
+    <h1>Weather Dashboard</h1>
+
+    <!-- Line chart to display temperature over time -->
+    <canvas id="temperatureChart" width="400" height="200"></canvas>
+
+    <!-- Other weather data -->
+    <p>Temperature: {{ temperatures[-1] }}°C</p>
+    <p>Humidity: {{ humidity }}%</p>
+    <p>Wind Speed: {{ wind_speed }} km/h</p>
+    <p>Weather Condition: {{ weather_condition }}</p>
+
+    <script>
+        // Get timestamps and temperatures from Flask template variables
+        var timestamps = {{ timestamps | tojson }};
+        var temperatures = {{ temperatures | tojson }};
+
+        // Create a line chart for temperature over time
+        var ctx = document.getElementById('temperatureChart').getContext('2d');
+        var temperatureChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: 'Temperature (°C)',
+                    data: temperatures,
+                    borderColor: 'blue',
+                    borderWidth: 2,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'blue',
+                    fill: false
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Temperature Over Time'
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'hour',
+                                displayFormats: {
+                                    hour: 'h:mm A'
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Timestamp'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Temperature (°C)'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

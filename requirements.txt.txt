@@ -1,0 +1,21 @@
+Flask==2.1.2
+requests==2.26.0
+sqlite3==3.38.0
+schedule==1.1.0
+matplotlib==3.4.3
+
+
+
+project/
+|-- app.py                # Your Flask application script
+|-- templates/            # Directory for HTML templates
+|   |-- web.html          # Your HTML template file
+|-- static/               # Directory for static files (JavaScript, CSS)
+|   |-- js/               # Directory for JavaScript files
+|   |   |-- script.js     # Your JavaScript file
+|   |-- css/              # Directory for CSS files
+|       |-- style.css     # Your CSS file
+|-- venv/                 # Virtual environment (if you're using one)
+|-- weather_data.db       # SQLite database file
+|-- requirements.txt      # List of project dependencies
+
